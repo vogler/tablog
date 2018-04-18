@@ -17,8 +17,13 @@
   },
   "options_page": "src/options.html",
   "permissions": [
+    "windows",
+    "tabs",
+    "webNavigation",
     "history",
     "idle",
-    "tabs"
+    "storage",
+    "management",
+    "pageCapture"
   ]
 }

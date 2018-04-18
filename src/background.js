@@ -1,13 +1,27 @@
-// if you checked "fancy-settings" in extensionizr.com, uncomment this lines
+const log = x => console.log(x); // chrome console can 'show timestamps'
+// const savePage = async tabId => new Promise(r => chrome.pageCapture.saveAsMHTML({tabId}, r));
 
-// var settings = new Store("settings", {
-//     "sample_setting": "This is how you use Store.js to remember values"
-// });
+// extensions
+// chrome.management.getAll(function callback)
 
+// idle
+// chrome.idle.queryState(integer detectionIntervalInSeconds, function callback)
+// chrome.idle.setDetectionInterval(integer intervalInSeconds)
 
-//example of using a message handler from the inject scripts
-chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
-  	chrome.pageAction.show(sender.tab.id);
-    sendResponse();
-  });
+// windows
+// chrome.windows.getAll(object getInfo, function callback)
+
+const events = {
+  'runtime': ['onStartup'],
+  'management': ['onInstalled', 'onUninstalled', 'onEnabled', 'onDisabled'],
+  'idle': ['onStateChanged'],
+  'history': ['onVisited', 'onVisitRemoved'],
+  'windows': ['onCreated', 'onRemoved', 'onFocusChanged'],
+  'tabs': ['onCreated', 'onUpdated', 'onMoved', 'onActivated', 'onDetached', 'onAttached', 'onRemoved', 'onZoomChange']
+}
+for(const group in events){
+  for(const listener of events[group]){
+    console.log('addListener', group, listener);
+    chrome[group][listener].addListener((...args) => console.log('event', group, listener, ...args));
+  }
+}
