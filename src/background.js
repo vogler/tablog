@@ -17,11 +17,15 @@ const events = {
   'idle': ['onStateChanged'],
   'history': ['onVisited', 'onVisitRemoved'],
   'windows': ['onCreated', 'onRemoved', 'onFocusChanged'],
-  'tabs': ['onCreated', 'onUpdated', 'onMoved', 'onActivated', 'onDetached', 'onAttached', 'onRemoved', 'onZoomChange']
+  'tabs': ['onCreated', {name: 'onUpdated', filter: (id, o) => o.status == 'complete'}, 'onMoved', 'onActivated', 'onDetached', 'onAttached', 'onRemoved', {name: 'onZoomChange', filter: o => o.newZoomFactor != o.oldZoomFactor}]
 }
 for(const group in events){
   for(const listener of events[group]){
     console.log('addListener', group, listener);
-    chrome[group][listener].addListener((...args) => console.log('event', group, listener, ...args));
+    chrome[group][listener.name || listener].addListener((...args) => {
+      if(!listener.filter || listener.filter(...args)) {
+        console.log('event', group, listener, ...args);
+      }
+    });
   }
 }
