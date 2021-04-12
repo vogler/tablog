@@ -17,6 +17,9 @@
   },
   "options_page": "src/options.html",
   "permissions": [
+    "http://*/",
+    "https://*/",
+    "activeTab",
     "windows",
     "tabs",
     "webNavigation",

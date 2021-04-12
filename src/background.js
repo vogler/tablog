@@ -1,3 +1,5 @@
+// import 'chrome-extension-async'
+
 const log = x => console.log(x); // chrome console can 'show timestamps'
 // const savePage = async tabId => new Promise(r => chrome.pageCapture.saveAsMHTML({tabId}, r));
 
@@ -29,3 +31,4 @@ for(const group in events){
     });
   }
 }
+// const windows = chrome.windows.getAll({populate: true}, console.log);
