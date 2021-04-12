@@ -1,7 +1,11 @@
+// combined boilerplate from the following two:
+// https://github.com/chibat/chrome-extension-typescript-starter/blob/master/webpack/webpack.common.js
+// https://github.com/sivertschou/react-typescript-chrome-extension-boilerplate/blob/master/webpack.config.js
+
 const webpack = require("webpack");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
-const srcDir = path.join(__dirname, "..", "src");
+const srcDir = path.join(__dirname, "src");
 
 module.exports = {
     entry: {
@@ -11,7 +15,7 @@ module.exports = {
       content_script: path.join(srcDir, 'content_script.tsx'),
     },
     output: {
-        path: path.join(__dirname, "../dist/js"),
+        path: path.join(__dirname, "dist/js"),
         filename: "[name].js",
     },
     optimization: {
@@ -31,11 +35,16 @@ module.exports = {
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
+        alias: {
+          "react-dom": "@hot-loader/react-dom",
+        },
+    },
+    devServer: {
+      contentBase: "./dist",
     },
     plugins: [
-        new CopyPlugin({
-            patterns: [{ from: ".", to: "../", context: "public" }],
-            options: {},
-        }),
+      new CopyPlugin({
+        patterns: [{ from: "public", to: "." }],
+      }),
     ],
 };
