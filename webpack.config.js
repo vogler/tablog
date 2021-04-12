@@ -39,12 +39,15 @@ module.exports = {
           "react-dom": "@hot-loader/react-dom",
         },
     },
-    devServer: {
-      contentBase: "./dist",
-    },
     plugins: [
       new CopyPlugin({
         patterns: [{ from: "public", to: "." }],
       }),
     ],
+    // mode: 'production',
+    mode: 'development',
+    devtool: 'inline-source-map',
+    devServer: {
+      contentBase: "./dist",
+    },
 };
